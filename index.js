@@ -11,14 +11,17 @@
     resize();
     var program=glUtils.createProgram(gl,vertexShader,fragmentShader);
     var program2=glUtils.createProgram(gl,vertexShader2,fragmentShader);
+    //Huruf
     var thetaLoc = gl.getUniformLocation(program, 'theta');
-    var theta = [0,0,0];   
+    var theta = [0,0,0];
+    var gerakLoc = gl.getUniformLocation(program, 'gerak');   
+    var gerak=[0,0,0];
+    var gerakx=0.0085;
+    var geraky=0.0085;
+    var gerakz=0.0085;
+    //Cube
     var thetaLocCube = gl.getUniformLocation(program2, 'theta');
-    var thetaCube = [0,0,0];  
-    var axis = 0;
-    var xAxis = 0;
-    var yAxis = 1;
-    var zAxis = 2;
+    var thetaCube = [15,40,0];  
     function resize(){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -38,42 +41,33 @@
      */
       var cubeVertices = [
         // x, y, z            r, g, b
-        -0.5,  0.5,  0.5,     1.0, 0.0, 0.0,  // depan, merah, BAD BDC
-        -0.5, -0.5,  0.5,     1.0, 0.0, 0.0,
-         0.5, -0.5,  0.5,     1.0, 0.0, 0.0,
-        -0.5,  0.5,  0.5,     1.0, 0.0, 0.0,
-         0.5, -0.5,  0.5,     1.0, 0.0, 0.0,
-         0.5,  0.5,  0.5,     1.0, 0.0, 0.0,
-         0.5,  0.5,  0.5,     0.0, 1.0, 0.0,  // kanan, hijau, CDH CHG
-         0.5, -0.5,  0.5,     0.0, 1.0, 0.0,
-         0.5, -0.5, -0.5,     0.0, 1.0, 0.0,
-         0.5,  0.5,  0.5,     0.0, 1.0, 0.0,
-         0.5, -0.5, -0.5,     0.0, 1.0, 0.0,
-         0.5,  0.5, -0.5,     0.0, 1.0, 0.0,
-         0.5, -0.5,  0.5,     0.0, 0.0, 1.0,  // bawah, biru, DAE DEH
-        -0.5, -0.5,  0.5,     0.0, 0.0, 1.0,
-        -0.5, -0.5, -0.5,     0.0, 0.0, 1.0,
-         0.5, -0.5,  0.5,     0.0, 0.0, 1.0,
-        -0.5, -0.5, -0.5,     0.0, 0.0, 1.0,
-         0.5, -0.5, -0.5,     0.0, 0.0, 1.0,
-        -0.5, -0.5, -0.5,     1.0, 1.0, 0.0,  // belakang, kuning, EFG EGH
-        -0.5,  0.5, -0.5,     1.0, 1.0, 0.0,
-         0.5,  0.5, -0.5,     1.0, 1.0, 0.0,
-        -0.5, -0.5, -0.5,     1.0, 1.0, 0.0,
-         0.5,  0.5, -0.5,     1.0, 1.0, 0.0,
-         0.5, -0.5, -0.5,     1.0, 1.0, 0.0,
-        -0.5,  0.5, -0.5,     0.0, 1.0, 1.0,  // kiri, cyan, FEA FAB
-        -0.5, -0.5, -0.5,     0.0, 1.0, 1.0,
-        -0.5, -0.5,  0.5,     0.0, 1.0, 1.0,
-        -0.5,  0.5, -0.5,     0.0, 1.0, 1.0,
-        -0.5, -0.5,  0.5,     0.0, 1.0, 1.0,
-        -0.5,  0.5,  0.5,     0.0, 1.0, 1.0,
-         0.5,  0.5, -0.5,     1.0, 0.0, 1.0,  // atas, magenta, GFB GBC
-        -0.5,  0.5, -0.5,     1.0, 0.0, 1.0,
-        -0.5,  0.5,  0.5,     1.0, 0.0, 1.0,
-         0.5,  0.5, -0.5,     1.0, 0.0, 1.0,
-        -0.5,  0.5,  0.5,     1.0, 0.0, 1.0,
-         0.5,  0.5,  0.5,     1.0, 0.0, 1.0
+        //ABCD
+        -0.5, -0.5,  0.5,    1.0, 0.0, 0.0,  // A depan, merah
+        -0.5, 0.5,  0.5,     1.0, 0.0, 0.0,  // B
+        -0.5, 0.5,  0.5,     1.0, 0.0, 0.0,  // B
+        0.5,  0.5,  0.5,     1.0, 0.0, 0.0,  // C
+        0.5,  0.5,  0.5,     1.0, 0.0, 0.0,  // C
+        0.5, -0.5,  0.5,     1.0, 0.0, 0.0,  // D
+        0.5, -0.5,  0.5,     1.0, 0.0, 0.0,  // D
+        -0.5, -0.5,  0.5,    1.0, 0.0, 0.0,  // A
+        //EFGH
+        -0.5, -0.5, -0.5,    0.0, 1.0, 0.0,  // E belakang, hijau
+        -0.5, 0.5,  -0.5,    0.0, 1.0, 0.0,  // F
+        -0.5, 0.5,  -0.5,    0.0, 1.0, 0.0,  // F
+        0.5,  0.5,  -0.5,    0.0, 1.0, 0.0,  // G
+        0.5,  0.5,  -0.5,    0.0, 1.0, 0.0,  // G
+        0.5, -0.5,  -0.5,    0.0, 1.0, 0.0,  // H
+        0.5, -0.5,  -0.5,    0.0, 1.0, 0.0,  // H
+        -0.5, -0.5, -0.5,    0.0, 1.0, 0.0,  // E
+        //AEBFCGDH
+        -0.5, -0.5,  0.5,    0.0, 0.0, 1.0,  // A tinggi, biru
+        -0.5, -0.5, -0.5,    0.0, 0.0, 1.0,  // E
+        -0.5, 0.5,  0.5,     0.0, 0.0, 1.0,  // B
+        -0.5, 0.5,  -0.5,    0.0, 0.0, 1.0,  // F
+        0.5,  0.5,  0.5,     0.0, 0.0, 1.0,  // C
+        0.5,  0.5,  -0.5,    0.0, 0.0, 1.0,  // G
+        0.5, -0.5,  0.5,     0.0, 0.0, 1.0,  // D
+        0.5, -0.5,  -0.5,    0.0, 0.0, 1.0,  // H
       ];
   
       var cubeVBO = gl.createBuffer();
@@ -95,7 +89,6 @@
   
       gl.enableVertexAttribArray(vPosition);
       gl.enableVertexAttribArray(vColor);
-      thetaCube[axis]+=0.5;
       gl.uniform3fv(thetaLocCube,thetaCube);
     }
     function rendersegitiga(){
@@ -154,6 +147,21 @@
       gl.vertexAttribPointer(aColor, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
       gl.enableVertexAttribArray(aPosition);
       gl.enableVertexAttribArray(aColor);
+      if(gerak[0] > 0.5 * 0.7 || gerak[0] <-0.5 * 0.7){
+        gerakx*=-1;
+      }
+      gerak[0]+=gerakx;
+      gerak[1]+=geraky;
+      gerak[2]+=gerakz;
+      if(gerak[1] > 0.5 * 0.7 || gerak[1] <-0.5 * 0.7){
+        geraky*=-1;
+      }
+      gerak[1]+=geraky;
+      if(gerak[2] > 0.5 * 0.7 || gerak[2] <-0.5 * 0.7){
+        gerakz*=-1;
+      }
+      gerak[2]+=gerakz;
+      gl.uniform3fv(gerakLoc,gerak);
       theta[1]+=0.85;
       gl.uniform3fv(thetaLoc, theta);
     }
@@ -167,7 +175,7 @@
       rendersegitiga();
       gl.drawArrays(gl.TRIANGLES,0,42);
       cube();
-      gl.drawArrays(gl.LINES, 0, 36);
+      gl.drawArrays(gl.LINES, 0, 24);
     } 
     render();
   }   
