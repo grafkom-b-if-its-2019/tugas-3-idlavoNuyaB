@@ -21,7 +21,7 @@
     var gerakz=0.0085;
     //Cube
     var thetaLocCube = gl.getUniformLocation(program2, 'theta');
-    var thetaCube = [15,40,0];  
+    var thetaCube = [15,40,15];  
     function resize(){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -156,10 +156,14 @@
       if(gerak[1] > 0.5 * 0.7 || gerak[1] <-0.5 * 0.7){
         geraky*=-1;
       }
+      gerak[0]+=gerakx;
       gerak[1]+=geraky;
+      gerak[2]+=gerakz;
       if(gerak[2] > 0.5 * 0.7 || gerak[2] <-0.5 * 0.7){
         gerakz*=-1;
       }
+      gerak[0]+=gerakx;
+      gerak[1]+=geraky;
       gerak[2]+=gerakz;
       gl.uniform3fv(gerakLoc,gerak);
       theta[1]+=0.85;
