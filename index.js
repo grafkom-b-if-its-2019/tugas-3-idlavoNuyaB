@@ -16,12 +16,12 @@
     var theta = [0,0,0];
     var gerakLoc = gl.getUniformLocation(program, 'gerak');   
     var gerak=[0,0,0];
-    var gerakx=0.0085;
-    var geraky=0.0085;
-    var gerakz=0.0085;
+    var gerakx=Math.random() * 0.0085;
+    var geraky=Math.random()* 0.0085;
+    var gerakz=Math.random()* 0.0085;
     //Cube
     var thetaLocCube = gl.getUniformLocation(program2, 'theta');
-    var thetaCube = [15,40,15];  
+    var thetaCube = [10,10,0];  
     function resize(){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -147,23 +147,23 @@
       gl.vertexAttribPointer(aColor, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
       gl.enableVertexAttribArray(aPosition);
       gl.enableVertexAttribArray(aColor);
-      if(gerak[0] > 0.5 * 0.7 || gerak[0] <-0.5 * 0.7){
+      if(gerak[0] > 0.5 * 0.9 || gerak[0] <-0.5 * 0.9){
         gerakx*=-1;
       }
       gerak[0]+=gerakx;
-      gerak[1]+=geraky;
-      gerak[2]+=gerakz;
+      // gerak[1]+=geraky;
+      // gerak[2]+=gerakz;
       if(gerak[1] > 0.5 * 0.7 || gerak[1] <-0.5 * 0.7){
         geraky*=-1;
       }
-      gerak[0]+=gerakx;
+      // gerak[0]+=gerakx;
       gerak[1]+=geraky;
-      gerak[2]+=gerakz;
+      // gerak[2]+=gerakz;
       if(gerak[2] > 0.5 * 0.7 || gerak[2] <-0.5 * 0.7){
         gerakz*=-1;
       }
-      gerak[0]+=gerakx;
-      gerak[1]+=geraky;
+      // gerak[0]+=gerakx;
+      // gerak[1]+=geraky;
       gerak[2]+=gerakz;
       gl.uniform3fv(gerakLoc,gerak);
       theta[1]+=0.85;
